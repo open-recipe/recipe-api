@@ -33,14 +33,14 @@ class Recipe
      * @ORM\Column
      * @Assert\NotBlank
      */
-    public $name;
+    private $name;
 
     /**
      * @var string The featured picture's url of this recipe.
      *
      * @ORM\Column
      */
-    public $featuredPicture;
+    private $featuredPicture;
 
     /**
      * @var DateTimeInterface The creation date of this recipe.
@@ -48,14 +48,24 @@ class Recipe
      * @ORM\Column(type="datetime")
      * @Assert\NotNull
      */
-    public $createdAt;
+    private $createdAt;
 
     /**
      * @var DateTimeInterface The update date of this recipe.
      *
      * @ORM\Column(type="datetime")
      */
-    public $updateAt;
+    private $updateAt;
+
+    /**
+     * @ORM\Column(type="array", nullable=false)
+     */
+    private $steps = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=false)
+     */
+    private $ingredients = [];
 
     /**
      * @return string
@@ -92,5 +102,61 @@ class Recipe
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param string $featuredPicture
+     */
+    public function setFeaturedPicture(string $featuredPicture): void
+    {
+        $this->featuredPicture = $featuredPicture;
+    }
+
+    /**
+     * @param DateTimeInterface $createdAt
+     */
+    public function setCreatedAt(DateTimeInterface $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @param DateTimeInterface $updateAt
+     */
+    public function setUpdateAt(DateTimeInterface $updateAt): void
+    {
+        $this->updateAt = $updateAt;
+    }
+
+    public function getSteps(): array
+    {
+        return $this->steps;
+    }
+
+    public function setSteps(array $steps): self
+    {
+        $this->steps = $steps;
+
+        return $this;
+    }
+
+    public function getIngredients(): array
+    {
+        return $this->ingredients;
+    }
+
+    public function setIngredients(array $ingredients): self
+    {
+        $this->ingredients = $ingredients;
+
+        return $this;
     }
 }

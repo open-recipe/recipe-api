@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-// api/src/Entity/Review.php
 
 namespace App\Entity;
 

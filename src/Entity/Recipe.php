@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,55 +28,65 @@ class Recipe
     private $id;
 
     /**
-     * @var string The title of this recipe.
+     * @var string The name of this recipe.
      *
      * @ORM\Column
      * @Assert\NotBlank
      */
-    public $title;
+    public $name;
 
     /**
-     * @var string[] The ingredients of this recipe.
-     *
-     * @ORM\Column(type="array")
-     * @Assert\NotBlank
-     */
-    public $ingredients;
-
-    /**
-     * @var string The recipe.
-     *
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank
-     */
-    public $recipe;
-
-    /**
-     * @var string The author of this recipe.
+     * @var string The featured picture's url of this recipe.
      *
      * @ORM\Column
-     * @Assert\NotBlank
      */
-    public $author;
+    public $featuredPicture;
 
     /**
-     * @var \DateTimeInterface The publication date of this recipe.
+     * @var DateTimeInterface The creation date of this recipe.
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotNull
      */
-    public $publicationDate;
+    public $createdAt;
 
     /**
-     * @var Review[] Available reviews for this recipe.
+     * @var DateTimeInterface The update date of this recipe.
      *
-     * @ORM\OneToMany(targetEntity="Review", mappedBy="recipe", cascade={"persist", "remove"})
+     * @ORM\Column(type="datetime")
      */
-    public $reviews;
+    public $updateAt;
 
-    public function __construct()
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
-        $this->reviews = new ArrayCollection();
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeaturedPicture(): string
+    {
+        return $this->featuredPicture;
+    }
+
+    /**
+     * @return DateTimeInterface
+     */
+    public function getCreatedAt(): DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return DateTimeInterface
+     */
+    public function getUpdateAt(): DateTimeInterface
+    {
+        return $this->updateAt;
     }
 
     public function getId(): ?int

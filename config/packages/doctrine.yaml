@@ -1,0 +1,28 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+        server_version: '11'
+        types:
+            text[]: MartinGeorgiev\Doctrine\DBAL\Types\TextArray
+            # Some other types are available in MartinGeorgiev\Doctrine
+        mapping_types:
+            text[]: text[]
+            _text: text[]
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        dql:
+            string_functions:
+                ALL_OF: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\All
+                ANY_OF: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Any
+                IN_ARRAY: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\InArray
+                CONTAINS: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Contains
+                ARRAY: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Arr
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App

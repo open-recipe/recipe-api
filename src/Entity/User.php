@@ -60,9 +60,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="user")
-     */
+    /** @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="user") */
     public Recipe $recipes;
 
     /**

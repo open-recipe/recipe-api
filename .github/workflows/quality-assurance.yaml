@@ -1,0 +1,37 @@
+name: Quality Assurance
+
+on: push
+
+jobs:
+    install:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@master
+
+            - name: Installing PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '7.4'
+                  extensions: mbstring, xdebug, intl
+
+            - name: Composer Install
+              run: composer install
+
+            - name: Easy coding standard
+              run: ./vendor/bin/ecs check ./src
+
+#            - name: PHPStan
+#              run: ./vendor/bin/phpstan analyse -c phpstan.neon -l max ./src/
+
+            - name: Checks that the YAML config files contain no syntax errors
+              run: ./bin/console lint:yaml config --parse-tags
+
+            - name: Checks that the YAML config files contain no syntax errorshecks that the Twig template files contain no syntax errors
+              run: ./bin/console lint:twig templates --env=prod
+
+            - name: Checks that the application doesn't use dependencies with known security vulnerabilities
+              run: ./bin/console security:check
+
+            - name: Checks that Doctrine's mapping configurations are valid
+              run: ./bin/console doctrine:schema:validate --skip-sync --no-interaction

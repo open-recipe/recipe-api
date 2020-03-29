@@ -15,38 +15,21 @@ class User implements UserInterface
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"unsigned": true})
      */
-    private $id;
+    public ?int $id = null;
 
     /** @ORM\Column(type="string", length=180, unique=true) */
-    private $email;
+    public string $email;
 
     /** @ORM\Column(type="json") */
-    private $roles = [];
+    public array $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
+    public string $password;
 
     /**
      * A visual identifier that represents this user.
@@ -107,5 +90,10 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function __toString(): string
+    {
+        return $this->email;
     }
 }

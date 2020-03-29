@@ -14,7 +14,8 @@ final class AppFixtures extends Fixture
 {
     private ValidatorInterface $validator;
 
-    public function __construct(ValidatorInterface $validator) {
+    public function __construct(ValidatorInterface $validator)
+    {
         $this->validator = $validator;
     }
 
@@ -31,22 +32,22 @@ final class AppFixtures extends Fixture
 
         $onePot = new Recipe();
         $onePot->name = "Jules's One Pot";
-        $onePot->featuredPicture = "";
+        $onePot->featuredPicture = '';
         $onePot->ingredients = [
-            "250g de blé",
-            "250g de mascarpone",
-            "150g de lardons",
-            "2 gros blancs de poireaux",
-            "1 cube bouillon légumes",
+            '250g de blé',
+            '250g de mascarpone',
+            '150g de lardons',
+            '2 gros blancs de poireaux',
+            '1 cube bouillon légumes',
             "50cl d'eau",
             "1 cuillère à soupe d'huile d'olive",
-            "Persil",
-            "Sel",
-            "Poivre",
+            'Persil',
+            'Sel',
+            'Poivre',
         ];
         $onePot->steps = [
-            "Tout mélanger dans une cocotte",
-            "Feu moyen 15-20min en remuant régulièrement"
+            'Tout mélanger dans une cocotte',
+            'Feu moyen 15-20min en remuant régulièrement',
         ];
         $onePot->createdAt = new \DateTime();
         $onePot->updateAt = new \DateTime();

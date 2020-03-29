@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @ORM\Table(name="app_user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
 {
+    /** @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="user", orphanRemoval=true) */
+    public $recipes;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -30,6 +35,13 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     public string $password;
+
+//    public function __construct($email)
+    public function __construct($email)
+    {
+        $this->email = $email;
+        $this->recipes = new ArrayCollection();
+    }
 
     /**
      * A visual identifier that represents this user.
@@ -60,8 +72,6 @@ class User implements UserInterface
         return $this;
     }
 
-    /** @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="user") */
-    public Recipe $recipes;
 
     /**
      * @see UserInterface

@@ -61,6 +61,11 @@ class User implements UserInterface
     }
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="user")
+     */
+    public Recipe $recipes;
+
+    /**
      * @see UserInterface
      */
     public function getPassword(): string

@@ -5,81 +5,61 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\Common\Collections\ArrayCollection;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * A recipe.
- *
  * @ORM\Entity
  * @ApiResource
  */
 class Recipe
 {
     /**
-     * @var int The id of this recipe.
-     *
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"unsigned": true})
      */
-    private $id;
+    public ?int $id = null;
 
     /**
-     * @var string The title of this recipe.
-     *
      * @ORM\Column
      * @Assert\NotBlank
      */
-    public $title;
+    public string $name;
+
+    /** @ORM\Column */
+    public string $featuredPicture;
 
     /**
-     * @var string[] The ingredients of this recipe.
-     *
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="text[]", nullable=true)
      * @Assert\NotBlank
+     * @Assert\All({
+     *     @Assert\NotBlank
+     * })
      */
-    public $ingredients;
+    public array $steps = [];
 
     /**
-     * @var string The recipe.
-     *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text[]", nullable=true)
      * @Assert\NotBlank
+     * @Assert\All({
+     *     @Assert\NotBlank
+     * })
      */
-    public $recipe;
+    public array $ingredients = [];
 
     /**
-     * @var string The author of this recipe.
-     *
-     * @ORM\Column
-     * @Assert\NotBlank
-     */
-    public $author;
-
-    /**
-     * @var \DateTimeInterface The publication date of this recipe.
-     *
      * @ORM\Column(type="datetime")
      * @Assert\NotNull
      */
-    public $publicationDate;
+    public DateTimeInterface $createdAt;
 
-    /**
-     * @var Review[] Available reviews for this recipe.
-     *
-     * @ORM\OneToMany(targetEntity="Review", mappedBy="recipe", cascade={"persist", "remove"})
-     */
-    public $reviews;
+    /** @ORM\Column(type="datetime") */
+    public DateTimeInterface $updateAt;
 
-    public function __construct()
+    public function __toString(): string
     {
-        $this->reviews = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
+        return $this->name;
     }
 }

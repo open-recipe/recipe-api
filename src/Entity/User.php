@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     /** @ORM\OneToMany(targetEntity="App\Entity\Recipe", mappedBy="user", orphanRemoval=true) */
-    public $recipes;
+    public iterable $recipes;
 
     /**
      * @ORM\Id()
@@ -36,7 +36,6 @@ class User implements UserInterface
      */
     public string $password;
 
-//    public function __construct($email)
     public function __construct($email)
     {
         $this->email = $email;

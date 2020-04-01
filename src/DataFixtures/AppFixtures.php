@@ -22,14 +22,9 @@ final class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $this->loadUsers($manager);
         $this->loadRecipes($manager);
 
-        // create 20 users!
-        for ($i = 0; $i < 20; ++$i) {
-            $user = new User(sprintf('user%d@example.com', $i));
-            $user->setPassword('123456');
-            $manager->persist($user);
-        }
         $manager->flush();
     }
 
@@ -63,6 +58,16 @@ final class AppFixtures extends Fixture
 
         foreach ($recipes as $recipe) {
             $this->validateAndPersist($manager, $recipe);
+        }
+    }
+
+    private function loadUsers(ObjectManager $manager): void
+    {
+        for ($i = 0; $i < 20; ++$i) {
+            $user = new User(sprintf('user%d@example.com', $i));
+            $user->setPassword('123456');
+
+            $this->validateAndPersist($manager, $user);
         }
     }
 

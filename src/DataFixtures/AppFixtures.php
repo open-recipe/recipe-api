@@ -76,3 +76,4 @@ final class AppFixtures extends Fixture
 
         $manager->persist($object);
     }
+}

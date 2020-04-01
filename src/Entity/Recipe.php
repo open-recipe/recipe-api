@@ -58,6 +58,12 @@ class Recipe
     /** @ORM\Column(type="datetime") */
     public DateTimeInterface $updateAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="recipes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    public User $user;
+
     public function __toString(): string
     {
         return $this->name;

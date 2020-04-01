@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 
 use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Entity\Recipe;
+use App\Entity\User;
 use App\Exception\ConstraintViolationListException;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -21,6 +22,7 @@ final class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $this->loadUsers($manager);
         $this->loadRecipes($manager);
 
         $manager->flush();
@@ -56,6 +58,16 @@ final class AppFixtures extends Fixture
 
         foreach ($recipes as $recipe) {
             $this->validateAndPersist($manager, $recipe);
+        }
+    }
+
+    private function loadUsers(ObjectManager $manager): void
+    {
+        for ($i = 0; $i < 20; ++$i) {
+            $user = new User(sprintf('user%d@example.com', $i));
+            $user->setPassword('123456');
+
+            $this->validateAndPersist($manager, $user);
         }
     }
 
